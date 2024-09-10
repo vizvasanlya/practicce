@@ -1,0 +1,36 @@
+name: VM Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # This is the VM configuration in GitHub Actions
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Set Up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+
+    - name: Install Dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run Tests
+      run: |
+        pytest
+
+    - name: Build Project
+      run: |
+        python setup.py build
+
+    - name: Deploy
+      run: |
+        # Add your deployment steps here
+        echo "Deploying application..."
